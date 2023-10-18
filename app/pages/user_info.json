@@ -1,0 +1,120 @@
+{
+  "type": "page",
+  "title": "用户信息",
+  "body": [
+    {
+      "id": "u:8592ed50bc68",
+      "type": "form",
+      "title": "",
+      "mode": "horizontal",
+      "dsType": "api",
+      "feat": "Insert",
+      "body": [
+        {
+          "type": "input-text",
+          "label": "用户名",
+          "name": "username",
+          "id": "u:64e1781e4632"
+        }
+      ],
+      "actions": [
+        {
+          "type": "button",
+          "label": "提交",
+          "onEvent": {
+            "click": {
+              "actions": [
+                {
+                  "actionType": "submit",
+                  "componentId": "u:8592ed50bc68"
+                }
+              ]
+            }
+          },
+          "level": "primary",
+          "id": "u:0b6582aa591e"
+        }
+      ],
+      "resetAfterSubmit": true,
+      "target": "user_info"
+    },
+    {
+      "type": "service",
+      "body": [
+        {
+          "id": "u:cc7a07fc2c1d",
+          "type": "form",
+          "title": "表单",
+          "mode": "horizontal",
+          "dsType": "api",
+          "feat": "Insert",
+          "body": [
+            {
+              "type": "input-text",
+              "label": "地址",
+              "name": "address.addr_no",
+              "id": "u:c04154df8107"
+            },
+            {
+              "type": "table",
+              "columns": [
+                {
+                  "label": "参数ID",
+                  "name": "parid",
+                  "type": "text",
+                  "id": "u:102c196a21ce"
+                },
+                {
+                  "type": "text",
+                  "label": "参数值",
+                  "name": "parva",
+                  "id": "u:aea0b9bd972c"
+                },
+                {
+                  "type": "text",
+                  "label": "说明",
+                  "name": "partxt",
+                  "id": "u:2e8aa768722d"
+                }
+              ],
+              "id": "u:3e67139da36c",
+              "source": "$parameter"
+            }
+          ],
+          "api": {
+            "url": "",
+            "method": "get",
+            "requestAdaptor": "",
+            "adaptor": "",
+            "messages": {},
+            "data": {
+              "USERNAME": "WWSHENG"
+            }
+          },
+          "actions": [],
+          "resetAfterSubmit": true
+        }
+      ],
+      "id": "u:ac6ed24f101f",
+      "dsType": "api",
+      "api": {
+        "url": "/fmcall/BAPI_USER_GET_DETAIL",
+        "method": "get",
+        "requestAdaptor": "",
+        "adaptor": "",
+        "messages": {},
+        "dataType": "form-data",
+        "data": {
+          "USERNAME": "${username}"
+        }
+      },
+      "name": "user_info"
+    }
+  ],
+  "id": "u:bda021fa583b",
+  "asideResizor": false,
+  "pullRefresh": {
+    "disabled": true
+  },
+  "regions": ["body"]
+}

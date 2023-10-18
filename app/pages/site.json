@@ -1,0 +1,237 @@
+{
+  "type": "app",
+  "brandName": "应用名称",
+  "pages": [
+    {
+      "redirect": "/about",
+      "url": "/",
+      "label": "Home"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "icon": "fa fa-list",
+              "label": "列表",
+              "schemaApi": "get:pages/user_info.json",
+              "url": "list"
+            },
+            {
+              "label": "新增",
+              "schemaApi": "get:/amis-admin/pages/model_create.json",
+              "url": "new",
+              "icon": "fa fa-plus"
+            },
+            {
+              "label": "查看",
+              "schemaApi": "get:/amis-admin/pages/model_create.json",
+              "url": ":id"
+            },
+            {
+              "label": "修改",
+              "schemaApi": "get:/amis-admin/pages/model_create.json",
+              "url": ":id/edit"
+            }
+          ],
+          "icon": "fa fa-cube",
+          "label": "模型维护",
+          "rewrite": "/model/list",
+          "url": "/model"
+        },
+        {
+          "label": "表数据管理",
+          "icon": "fa fa-book",
+          "schemaApi": "get:/amis-admin/pages/table-maintain.json",
+          "url": "/table_maintain"
+        },
+
+        {
+          "label": "Studio",
+          "url": "/studio",
+          "icon": "fab fa-studiovinari",
+          "children": [
+            {
+              "label": "表格字段",
+              "icon": "fas fa-table",
+              "schemaApi": "get:/amis-admin/pages/table-fields.json"
+            },
+            {
+              "label": "代码生成",
+              "icon": "fas fa-code",
+              "schemaApi": "get:/amis-admin/pages/studio.json"
+            },
+            {
+              "label": "API列表",
+              "icon": "fas fa-list-ol",
+              "schemaApi": "get:/api/v1/table/schema/system.api/crud-all.json",
+              "url": "/best/crud/system.api"
+            },
+            {
+              "label": "字体列表",
+              "icon": "fab fa-font-awesome",
+              "schemaApi": "get:/amis-admin/pages/font.json",
+              "url": "font"
+            },
+            {
+              "schemaApi": "get:/amis-admin/pages/editor.json",
+              "label": "Amis-编辑器",
+              "icon": "far fa-file-code",
+              "url": "editor"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "label": "测试",
+          "icon": "fab fa-airbnb",
+          "children": [
+            {
+              "link": "http://baidu.gitee.io/amis",
+              "label": "外部链接"
+            },
+            {
+              "schemaApi": "get:/api/v1/amis/debug",
+              "label": "调试"
+            },
+            {
+              "children": [
+                {
+                  "icon": "fa fa-list",
+                  "label": "列表",
+                  "schemaApi": "get:/api/__yao/widget/amis/crud-list/setting",
+                  "url": "/crud/list"
+                },
+                {
+                  "label": "新增",
+                  "schemaApi": "get:/api/__yao/widget/amis/crud-new/setting",
+                  "url": "/crud/new",
+                  "icon": "fa fa-plus"
+                },
+                {
+                  "label": "查看",
+                  "schemaApi": "get:/api/__yao/widget/amis/crud-view/setting",
+                  "url": "/crud/:id"
+                },
+                {
+                  "label": "修改",
+                  "schemaApi": "get:/api/__yao/widget/amis/crud-edit/setting",
+                  "url": "/crud/:id/edit"
+                }
+              ],
+              "icon": "fa fa-cube",
+              "label": "数据维护",
+              "rewrite": "/crud/list",
+              "url": "/crud"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "url": "/system",
+      "children": [
+        {
+          "label": "系统管理",
+          "icon": "fas fa-toolbox",
+          "children": [
+            {
+              "label": "个人信息",
+              "icon": "fas fa-info",
+              "schemaApi": "get:/amis-admin/pages/user_info.json",
+              "url": "user/info"
+            },
+            {
+              "label": "菜单测试",
+              "icon": "fas fa-list-ul",
+              "schemaApi": "get:/amis-admin/pages/menu_tree.json"
+            },
+            {
+              "label": "菜单管理",
+              "icon": "fas fa-bars",
+              "schemaApi": "get:/amis-admin/pages/menu.json"
+            },
+            {
+              "label": "部门管理",
+              "icon": "fab fa-dyalog",
+              "schemaApi": "get:/amis-admin/pages/dept.json"
+            },
+            {
+              "label": "修改密码",
+              "icon": "fab fa-app-store-ios",
+              "schemaApi": "get:/amis-admin/pages/user_password_change.json"
+            },
+
+            {
+              "label": "用户管理",
+              "icon": "fa fa-user",
+              "schemaApi": "get:/api/v1/table/schema/admin.user/crud-all.json",
+              "url": "/best/crud/admin.user"
+            },
+            {
+              "rewrite": "/crud/admin.user/list",
+              "url": "/crud/table/admin.user",
+              "children": [
+                {
+                  "icon": "fa fa-list",
+                  "label": "列表",
+                  "schemaApi": "get:/api/v1/table/schema/admin.user/crud-list.json",
+                  "url": "/crud/admin.user/list"
+                },
+                {
+                  "icon": "fa fa-plus",
+                  "label": "新增",
+                  "schemaApi": "get:/api/v1/table/schema/admin.user/crud-new.json",
+                  "url": "/crud/admin.user/new"
+                },
+                {
+                  "label": "查看",
+                  "icon": "fa fa-eye",
+                  "schemaApi": "get:/api/v1/table/schema/admin.user/crud-view.json",
+                  "url": "/crud/admin.user/view/:id"
+                },
+                {
+                  "schemaApi": "get:/api/v1/table/schema/admin.user/crud-edit.json",
+                  "url": "/crud/admin.user/edit/:id",
+                  "label": "修改",
+                  "icon": "fa fa-pencil"
+                }
+              ],
+              "icon": "fa fa-user",
+              "label": "用户维护2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "label": "关于",
+          "icon": "fa fa-info",
+          "schemaApi": "get:pages/about.json",
+          "url": "/about"
+        }
+      ]
+    },
+    {
+      "children": [
+        {
+          "label": "退出",
+          "icon": "fas fa-outdent",
+          "schemaApi": "get:/amis-admin/pages/user_logout.json",
+          "url": "/logout"
+        }
+      ]
+    },
+    {
+      "label": "404",
+      "schemaApi": "get:/api/__yao/widget/amis/404/setting",
+      "isDefaultPage": true,
+      "visible": false
+    }
+  ]
+}

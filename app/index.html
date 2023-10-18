@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>yao-amis admin</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <!-- <link rel="stylesheet" title="default" href="https://unpkg.com/amis@3.2.0/sdk/sdk.css" /> -->
+    <link rel="stylesheet" title="default" href="/sap/public/bc/ur/amis/sdk.css" />
+    <link rel="stylesheet" href="/sap/public/bc/ur/amis/helper.css" />
+    <link rel="stylesheet" href="/sap/public/bc/ur/amis/iconfont.css" />
+    <script src="/sap/public/bc/ur/amis/sdk.js"></script>
+    <!-- <script src="https://unpkg.com/vue@2"></script> -->
+    <script src="history.js"></script>
+    <style>
+        html,
+        body,
+        .app-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root" class="app-wrapper"></div>
+    <script>
+        function getCookie(name) {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return null;
+        }
+        //if (!getCookie("token")) {
+        //  window.location.href = "/amis-admin/login.html"
+        //}
+        (async function () {
+            let amis = amisRequire('amis/embed');
+            const match = amisRequire('path-to-regexp').match;
+            const axios = amisRequire('axios')
+            // 如果想用 browserHistory 请切换下这处代码, 其他不用变
+            // const history = History.createBrowserHistory();
+            const history = History.createHashHistory();
+            const request = await axios.get("pages/header-toolbar.json")
+            const header = request.data.toolbar[0]
+            const app = {
+                type: 'app',
+                brandName: 'Yao-Amis',
+                logo: 'public/vite.svg',
+                header: header,
+                footer: '<div class="p-2 text-center bg-light"></div>',
+                // asideBefore: '<div class="p-2 text-center">菜单前面区域</div>',
+                // asideAfter: '<div class="p-2 text-center">菜单后面区域</div>',
+                api: {
+                    'url': 'pages/site.json',
+                    'adaptor': function (payload, response, api) {
+                        return {
+                            status: 0,
+                            msg: '请求成功',
+                            data: payload
+                        }
+                    }
+                }
+            };
+            function normalizeLink(to, location = history.location) {
+                to = to || '';
+                if (to && to[0] === '#') {
+                    to = location.pathname + location.search + to;
+                } else if (to && to[0] === '?') {
+                    to = location.pathname + to;
+                }
+                const idx = to.indexOf('?');
+                const idx2 = to.indexOf('#');
+                let pathname = ~idx
+                    ? to.substring(0, idx)
+                    : ~idx2
+                        ? to.substring(0, idx2)
+                        : to;
+                let search = ~idx ? to.substring(idx, ~idx2 ? idx2 : undefined) : '';
+                let hash = ~idx2 ? to.substring(idx2) : location.hash;
+                if (!pathname) {
+                    pathname = l
+                    ocation.pathname;
+                } else if (pathname[0] != '/' && !/^https?\:\/\//.test(pathname)) {
+                    let relativeBase = location.pathname;
+                    const paths = relativeBase.split('/');
+                    paths.pop();
+                    let m;
+                    while ((m = /^\.\.?\//.exec(pathname))) {
+                        if (m[0] === '../') {
+                            paths.pop();
+                        }
+                        pathname = pathname.substring(m[0].length);
+                    }
+                    pathname = paths.concat(pathname).join('/');
+                }
+                return pathname + search + hash;
+            }
+            function isCurrentUrl(to, ctx) {
+                if (!to) {
+                    return false;
+                }
+                const pathname = history.location.pathname;
+                const link = normalizeLink(to, {
+                    ...location,
+                    pathname,
+                    hash: ''
+                });
+                if (!~link.indexOf('http') && ~link.indexOf(':')) {
+                    let strict = ctx && ctx.strict;
+                    return match(link, {
+                        decode: decodeURIComponent,
+                        strict: typeof strict !== 'undefined' ? strict : true
+                    })(pathname);
+                }
+                return decodeURI(pathname) === link;
+            }
+            let amisInstance = amis.embed(
+                '#root',
+                app,
+                {
+                    location: history.location,
+                    data: {
+                        // 全局数据，是受控的数据
+                    },
+                    context: {
+                        // 全局上下文数据, 非受控的数据，无论哪一层都能获取到，包括弹窗自定义数据映射后都能获取到。
+                        // 可以用来放一下全局配置等。比如 API_HOST, 这样页面配置里面可以通过 ${API_HOST} 来获取到。
+                        //API_HOST: ''
+                        STUDIO_HOST: 'http://localhost:5077',
+                    }
+                },
+                {
+                    fetcher: ({ url, method, data, config, headers }) => {
+                        config = config || {};
+                        config.headers = config.headers || headers || {};
+                        //使用token
+                        let token = getCookie('token');
+                        config.withCredentials = true;
+                        try {
+                            // debugger;
+                            const url2 = new URL(url);
+                            //跨域
+                            //后端可能会设置：Access-Control-Allow-Origin:'*'，与withCredentials会有冲突
+                            if (
+                                url2.port !== window.location.port ||
+                                url2.host !== window.location.host ||
+                                url2.protocol != window.location.protocol
+                            ) {
+                                //使用studio
+                                token = getCookie('studio');
+                                config.withCredentials = false;
+                            }
+                        } catch (error) { }
+                        if (token) {
+                            config.headers['Authorization'] = `Bearer ${token}`
+                        } else {
+                            // window.location.href = 'login.html';
+                            //return;
+                        }
+                        const catcherr = (error) => {
+                            if (error.response.data && error.response.data.message) {
+                                error.message = error.response.data.message;
+                            }
+                            if (error.response) {
+                                // console.log(error.response.data);
+                                // console.log(error.response.status);
+                                // console.log(error.response.headers);
+                                if (error.response.data.message === 'Invalid token') {
+                                    window.location.href = 'login.html';
+                                }
+                            } else if (error.request) {
+                                // The request was made but no response was received
+                                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                                // http.ClientRequest in node.js
+                                // console.log(error.request);
+                            } else {
+                                // Something happened in setting up the request that triggered an Error
+                                // console.log('Error', error.message);
+                            }
+                            return new Promise(function (resolve, reject) {
+                                reject(error);
+                            });
+                        };
+                        const check = (response) => {
+                            //判断返回结构是否已经是amis结构
+                            if (typeof response.data === 'object' && response.data !== null
+                                && 'data' in response.data
+                                && 'msg' in response.data
+                                && 'status' in response.data) {
+                                return new Promise(function (resolve,
+                                    reject) {
+                                    resolve(response);
+                                });
+                            }
+                            // debugger;
+                            // const url = new URL(response.config.url);
+                            const path = response.config.url;
+                            if (!path.startsWith('/api')) {
+                                return new Promise(function (resolve, reject) {
+                                    resolve(response);
+                                });
+                            }
+                            //组成新的payload,即是修改response的数据
+                            let payload = {
+                                status: !response.data.code ? 0 : response.data.code,
+                                msg: response.data.message ? response.data.message : '处理成功',
+                                data: response.data
+                            };
+                            response.data = payload;
+                            // 在这个回调函数中返回一个新的 Promise 对象
+                            return new Promise(function (resolve, reject) {
+                                // 这里应该返回一个新的response,可以在下一个adapter里使用
+                                // 执行异步操作
+                                // 在异步操作完成后调用 resolve 或 reject
+                                resolve(response);
+                            });
+                        }
+                        if (method !== 'post' && method !== 'put' && method !== 'patch') {
+                            if (data) {
+                                config.params = data;
+                            }
+                            return (axios)[method](url, config).then(check).catch(catcherr);
+                        } else if (data && data instanceof FormData) {
+                            // config.headers = config.headers || {};
+                            // config.headers['Content-Type'] = 'multipart/form-data';
+                        } else if (
+                            data &&
+                            typeof data !== 'string' &&
+                            !(data instanceof Blob) &&
+                            !(data instanceof ArrayBuffer)
+                        ) {
+                            data = JSON.stringify(data);
+                            config.headers['Content-Type'] = 'application/json';
+                        }
+                        return (axios)[method](url, data, config).then(check).catch(catcherr);
+                    },
+                    // watchRouteChange: fn => {
+                    //   return history.listen(fn);
+                    // },
+                    updateLocation: (location, replace) => {
+                        location = normalizeLink(location);
+                        if (location === 'goBack') {
+                            return history.goBack();
+                        } else if (
+                            (!/^https?\:\/\//.test(location) &&
+                                location ===
+                                history.location.pathname + history.location.search) ||
+                            location === history.location.href
+                        ) {
+                            // 目标地址和当前地址一样，不处理，免得重复刷新
+                            return;
+                        } else if (/^https?\:\/\//.test(location) || !history) {
+                            return (window.location.href = location);
+                        }
+                        if (isCurrentUrl(location)) {
+                            return;
+                        }
+                        history[replace ? 'replace' : 'push'](location);
+                    },
+                    jumpTo: (to, action) => {
+                        if (to === 'goBack') {
+                            return history.goBack();
+                        }
+                        to = normalizeLink(to);
+                        if (isCurrentUrl(to)) {
+                            return;
+                        }
+                        if (action && action.actionType === 'url') {
+                            action.blank === false ? (window.location.href = to) : window.open(to, '_blank');
+                            return;
+                        } else if (action && action.blank) {
+                            window.open(to, '_blank');
+                            return;
+                        }
+                        if (/^https?:\/\//.test(to)) {
+                            window.location.href = to;
+                        } else if (
+                            (!/^https?\:\/\//.test(to) &&
+                                to === history.pathname + history.location.search) ||
+                            to === history.location.href
+                        ) {
+                            // do nothing
+                        } else {
+                            history.push(to);
+                        }
+                    },
+                    isCurrentUrl: isCurrentUrl,
+                    theme: 'cxd',
+                    // theme: 'antd',
+                    enableAMISDebug: true,
+                }
+            );
+            history.listen(state => {
+                amisInstance.updateProps({
+                    location: state.location || state
+                });
+            });
+        })();
+    </script>
+</body>
+
+</html>
