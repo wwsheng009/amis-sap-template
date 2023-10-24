@@ -18,8 +18,8 @@
               "url": "list"
             },
             {
-              "label": "新增",
-              "schemaApi": "get:/amis-admin/pages/model_create.json",
+              "label": "odata",
+              "schemaApi": "get:pages/odata.json",
               "url": "new",
               "icon": "fa fa-plus"
             },
@@ -141,7 +141,7 @@
             {
               "label": "个人信息",
               "icon": "fas fa-info",
-              "schemaApi": "get:/amis-admin/pages/user_info.json",
+              "schemaApi": "get:pages/user_info.json",
               "url": "user/info"
             },
             {

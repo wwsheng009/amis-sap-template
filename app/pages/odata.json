@@ -1,0 +1,368 @@
+{
+  "type": "page",
+  "id": "u:e1ab959c77c5",
+  "asideResizor": false,
+  "pullRefresh": {
+    "disabled": true
+  },
+  "regions": ["body"],
+  "body": [
+    {
+      "type": "crud",
+      "syncLocation": false,
+      "api": {
+        "method": "get",
+        "url": "/sap/opu/odata/sap/SEPMRA_SHOP/Products?@format=json&sap-client=300",
+        "requestAdaptor": "",
+        "adaptor": "",
+        "messages": {}
+      },
+      "columns": [
+        {
+          "label": "Id",
+          "type": "text",
+          "name": "Id",
+          "id": "u:3d06b42c6ab4"
+        },
+        {
+          "label": "评分",
+          "type": "text",
+          "name": "AverageRating",
+          "id": "u:a88da0e27b34"
+        },
+        {
+          "label": "名称",
+          "type": "text",
+          "name": "Name",
+          "id": "u:123d5c850b8e"
+        },
+        {
+          "label": "描述",
+          "type": "text",
+          "name": "Description",
+          "id": "u:1e539cf5db46"
+        },
+        {
+          "label": "库存",
+          "type": "text",
+          "name": "StockQuantity",
+          "id": "u:c1b310f80e83"
+        },
+        {
+          "label": "币别",
+          "type": "text",
+          "name": "CurrencyCode",
+          "id": "u:8985350545a8"
+        },
+        {
+          "label": "深度",
+          "type": "text",
+          "name": "DimensionDepth",
+          "id": "u:c3418ddb2384"
+        },
+        {
+          "label": "高度",
+          "type": "text",
+          "name": "DimensionHeight",
+          "id": "u:7f6a957525bb"
+        },
+        {
+          "label": "单位",
+          "type": "text",
+          "name": "DimensionUnit",
+          "id": "u:3ca4dc4d1e66"
+        },
+        {
+          "label": "宽度",
+          "type": "text",
+          "name": "DimensionWidth",
+          "id": "u:e243a33a29fa"
+        },
+        {
+          "label": "是否复核",
+          "type": "status",
+          "name": "HasReviewOfCurrentUser",
+          "id": "u:42e7a5e957f8"
+        },
+
+        {
+          "label": "图片",
+          "type": "image",
+          "name": "ImageUrl",
+          "id": "u:8ef61434bdac"
+        },
+        {
+          "label": "是否收藏",
+          "type": "status",
+          "name": "IsFavoriteOfCurrentUser",
+          "id": "u:d173a4e532d1"
+        },
+        {
+          "label": "分类",
+          "type": "text",
+          "name": "MainCategoryId",
+          "id": "u:cfbc23f6a4b3"
+        },
+        {
+          "label": "分类名称",
+          "type": "text",
+          "name": "MainCategoryName",
+          "id": "u:80872a4dea63"
+        },
+        {
+          "label": "测量单位",
+          "type": "text",
+          "name": "MeasureUnit",
+          "id": "u:7ca13dba6e78"
+        },
+        {
+          "label": "价格",
+          "type": "text",
+          "name": "Price",
+          "id": "u:e9912450859b"
+        },
+        {
+          "label": "评分计数",
+          "type": "text",
+          "name": "RatingCount",
+          "id": "u:594f000d4b15"
+        },
+        {
+          "label": "子分类",
+          "type": "text",
+          "name": "SubCategoryId",
+          "id": "u:a8bb00bc20af"
+        },
+        {
+          "label": "供应商",
+          "type": "text",
+          "name": "SupplierId",
+          "id": "u:e0e27247d255"
+        },
+        {
+          "label": "供应商名称",
+          "type": "text",
+          "name": "SupplierName",
+          "id": "u:0596c5696ad0"
+        },
+        {
+          "label": "重量",
+          "type": "tpl",
+          "name": "Weight",
+          "tpl": "${WeightMeasure}${WeightUnit}",
+          "id": "u:0ea25fd716f1"
+        },
+        {
+          "type": "operation",
+          "label": "操作",
+          "buttons": [
+            {
+              "label": "查看",
+              "type": "button",
+              "actionType": "dialog",
+              "level": "link",
+              "dialog": {
+                "title": "查看详情",
+                "body": {
+                  "type": "form",
+                  "api": "xxx/update",
+                  "body": [
+                    {
+                      "label": "AverageRating",
+                      "name": "AverageRating",
+                      "type": "static",
+                      "id": "u:1a8d5818989d"
+                    },
+                    {
+                      "label": "Name",
+                      "name": "Name",
+                      "type": "static",
+                      "id": "u:607dd244be97"
+                    },
+                    {
+                      "label": "Description",
+                      "name": "Description",
+                      "type": "static",
+                      "id": "u:ff4f35e59dac"
+                    },
+                    {
+                      "label": "StockQuantity",
+                      "name": "StockQuantity",
+                      "type": "static",
+                      "id": "u:aa0c266cc88f"
+                    },
+                    {
+                      "label": "CurrencyCode",
+                      "name": "CurrencyCode",
+                      "type": "static",
+                      "id": "u:bb55accf93d1"
+                    },
+                    {
+                      "label": "DimensionDepth",
+                      "name": "DimensionDepth",
+                      "type": "static",
+                      "id": "u:92da38aeb2a3"
+                    },
+                    {
+                      "label": "DimensionHeight",
+                      "name": "DimensionHeight",
+                      "type": "static",
+                      "id": "u:fddb7aae6e96"
+                    },
+                    {
+                      "label": "DimensionUnit",
+                      "name": "DimensionUnit",
+                      "type": "static",
+                      "id": "u:e930b79eebc5"
+                    },
+                    {
+                      "label": "DimensionWidth",
+                      "name": "DimensionWidth",
+                      "type": "static",
+                      "id": "u:0217972231ca"
+                    },
+                    {
+                      "label": "HasReviewOfCurrentUser",
+                      "name": "HasReviewOfCurrentUser",
+                      "type": "static",
+                      "id": "u:eebc0904cae0"
+                    },
+                    {
+                      "label": "Id",
+                      "name": "Id",
+                      "type": "static",
+                      "id": "u:68ef0512feee"
+                    },
+                    {
+                      "label": "ImageUrl",
+                      "name": "ImageUrl",
+                      "type": "static-image",
+                      "id": "u:a8eb58232d09"
+                    },
+                    {
+                      "label": "IsFavoriteOfCurrentUser",
+                      "name": "IsFavoriteOfCurrentUser",
+                      "type": "static",
+                      "id": "u:84285e089488"
+                    },
+                    {
+                      "label": "LastModified",
+                      "name": "LastModified",
+                      "type": "static",
+                      "id": "u:86f5472fc6c8"
+                    },
+                    {
+                      "label": "MainCategoryId",
+                      "name": "MainCategoryId",
+                      "type": "static",
+                      "id": "u:dd6b6ea8d016"
+                    },
+                    {
+                      "label": "MainCategoryName",
+                      "name": "MainCategoryName",
+                      "type": "static",
+                      "id": "u:6017d2e7053f"
+                    },
+                    {
+                      "label": "MeasureUnit",
+                      "name": "MeasureUnit",
+                      "type": "static",
+                      "id": "u:3f6e90fec913"
+                    },
+                    {
+                      "label": "Price",
+                      "name": "Price",
+                      "type": "static",
+                      "id": "u:fb896be9cccc"
+                    },
+                    {
+                      "label": "RatingCount",
+                      "name": "RatingCount",
+                      "type": "static",
+                      "id": "u:e7ddf52dcff1"
+                    },
+                    {
+                      "label": "SubCategoryId",
+                      "name": "SubCategoryId",
+                      "type": "static",
+                      "id": "u:e092eef7e07b"
+                    },
+                    {
+                      "label": "SupplierId",
+                      "name": "SupplierId",
+                      "type": "static",
+                      "id": "u:58f0b95f8d24"
+                    },
+                    {
+                      "label": "SupplierName",
+                      "name": "SupplierName",
+                      "type": "static",
+                      "id": "u:c1387754fde0"
+                    },
+                    {
+                      "label": "WeightMeasure",
+                      "name": "WeightMeasure",
+                      "type": "static",
+                      "id": "u:72faa1de992c"
+                    },
+                    {
+                      "label": "WeightUnit",
+                      "name": "WeightUnit",
+                      "type": "static",
+                      "id": "u:5a362d2f0f26"
+                    }
+                  ],
+                  "id": "u:d93422ada151"
+                }
+              },
+              "id": "u:df1b5e14a532"
+            }
+          ],
+          "id": "u:196bfbf23ff5"
+        }
+      ],
+      "bulkActions": [],
+      "itemActions": [],
+      "filterSettingSource": [
+        "Id",
+        "AverageRating",
+        "Name",
+        "Description",
+        "StockQuantity",
+        "CurrencyCode",
+        "DimensionDepth",
+        "DimensionHeight",
+        "DimensionUnit",
+        "DimensionWidth",
+        "HasReviewOfCurrentUser",
+        "ImageUrl",
+        "IsFavoriteOfCurrentUser",
+        "MainCategoryId",
+        "MainCategoryName",
+        "MeasureUnit",
+        "Price",
+        "QuantityUnit",
+        "RatingCount",
+        "SubCategoryId",
+        "SubCategoryName",
+        "SupplierId",
+        "SupplierName",
+        "WeightMeasure",
+        "WeightUnit",
+        "ReviewAggregates",
+        "SubCategory",
+        "Supplier",
+        "Images",
+        "Reviews"
+      ],
+      "features": ["view"],
+      "id": "u:52bb69fd499b",
+      "perPageAvailable": [10],
+      "messages": {},
+      "initFetch": true,
+      "filter": null,
+      "defaultParams": {},
+      "loadDataOnce": true
+    }
+  ]
+}

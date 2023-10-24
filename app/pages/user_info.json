@@ -14,7 +14,8 @@
           "type": "input-text",
           "label": "用户名",
           "name": "username",
-          "id": "u:64e1781e4632"
+          "id": "u:64e1781e4632",
+          "value": "${system_info.uname}"
         }
       ],
       "actions": [
@@ -88,7 +89,7 @@
             "adaptor": "",
             "messages": {},
             "data": {
-              "USERNAME": "WWSHENG"
+              "USERNAME": ""
             }
           },
           "actions": [],
@@ -98,7 +99,7 @@
       "id": "u:ac6ed24f101f",
       "dsType": "api",
       "api": {
-        "url": "/fmcall/BAPI_USER_GET_DETAIL",
+        "url": "/amis/api/BAPI_USER_GET_DETAIL",
         "method": "get",
         "requestAdaptor": "",
         "adaptor": "",
